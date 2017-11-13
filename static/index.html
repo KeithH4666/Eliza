@@ -33,20 +33,33 @@
         </div>
       </form>
     </div>
+	
+	<ul id="chatList">
+	</ul>
     <!-- jQuery first, then Tether, then Bootstrap JS. -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 	
 	<script>
+	var list = document.getElementById('chatList');
       $("#user-input-form").submit(
         function(event) {
           event.preventDefault();
           $.get('/Eliza', { value: $('#user-input').val() } )
             .done(function (data) {
               $('#output-area').val(data);
-            })
+            
+
+			var entry = document.createElement('li');
+			var user = document.createElement('li');
+			user.appendChild(document.createTextNode("User: " + $('#user-input').val()));
+			entry.appendChild(document.createTextNode("Eliza : " + data));
+			list.appendChild(user)
+			list.appendChild(entry);
+			})
         });
+		
     </script>
 	
   </body>
