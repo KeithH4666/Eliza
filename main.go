@@ -43,10 +43,42 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 	rand.Seed(time.Now().UnixNano())
 	userGuess := r.URL.Query().Get("value")
 	
-	re := regexp.MustCompile(`I [love|am|Like](.*)`)
+	re := regexp.MustCompile(`(?i)[I|i] [love|like](.*)`)
+	if matched, _:= regexp.MatchString(`(?i).*\bHow|Why\b.*`, userGuess);matched{
+		answers1 := []string{`I like to keep myself and my answers to myself`,`Why would you wonder such a thing?`,`I'm a chat bot not wikipedia`}
+		randindex1 := rand.Intn(len(answers1))
+		fmt.Fprintf(w,answers1[randindex1])
+		return
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*am.*`, userGuess);matched{
+		answers3 := []string{`I'm not sure what that feels like, as I am a bot.`,`I have always wondered what human emotions are like.`,`I am unfamiliar with that feeling`}
+		randindex3 := rand.Intn(len(answers3))
+		fmt.Fprintf(w,answers3[randindex3])
+		return
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*Hello|Hey|Hi`, userGuess);matched{
+		answers4 := []string{`Greetings user, nice to chat!`,`Hello human! My name is Eliza!`,`Hello , my names Eliza! Lets chat!`}
+		randindex4 := rand.Intn(len(answers4))
+		fmt.Fprintf(w,answers4[randindex4])
+		return
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*\bfather\b.*`, userGuess);matched{
+		fmt.Fprintf(w,"I am your father")
+		return
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*hate|dont'|dislike.*`, userGuess);matched{
+		answers5 := []string{`Don't be so negative!`,`Always look on the bright side of life!`,`I'v learned as a bot to appreciate everything.`}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return
+	}
 
 	
-	answers := []string{`Why do %s?`, `How long have %s?`, `How long have you %s?`,`Why do %s?`}
+	answers := []string{`Why do %s?`, `How long have %s?`,`Why %s?`}
 	
 	
 	likeResponse := Response{re, answers} // Responses could be read from files.
@@ -56,9 +88,9 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 
 	reflectionMap := map[string]string{
 		"I": "you",
+		"i": "you",
 		"was": "were",
 		"are": "am",
-		"you": "I",
 		"like":"liked",
 		"love":"love",
 		"time": t.Format("3:04PM"),
@@ -76,43 +108,27 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 
 		// The output will be "How long have you liked me?" or "Why do you like me?"
 	} else {
-		fmt.Fprintf(w,"I don't know what you said.") // there was no regex match so just say some default answer.
+		responses :=[]string{
+		"I’m not sure what you’re trying to say. Could you explain it to me?",
+		"How does that make you feel?",
+		"Why do you say that?",
+		}
+		randindex := rand.Intn(len(responses))
+		fmt.Fprintf(w,responses[randindex]) // there was no regex match so just say some default answer.
 	}
-	
-	/*
-	response := ""
-	if (userGuess == "Hello"){
-		//fmt.Fprintf(w, "Hello, %s!", userGuess)
-		response = "Hello Keith, how are you?"
-		
-	}else{
-		response = "Try saying Hello!"
-		
-	}
-	if(strings.Contains(userGuess,"bad")){
-		response = "Be happy"
-		
-	}else if(strings.Contains(userGuess,"good")){
-		response = "Maaa G, Stress Less I love it hombre"
-	}
-	if(userGuess=="lets play"){
-		
-		response = ""
-		fmt.Fprintf(w,"Hahah see what i Did: %s",gameGuess)
-	
-	}
-	
-	fmt.Fprintf(w,"%s",response)
-	*/
 	
 }
 
 func main() {
 	
+	//Seeds for true random
+	rand.Seed(time.Now().UnixNano())
+	
 	//Handles static files
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
 	http.HandleFunc("/Eliza", Eliza)
+	
     log.Println("Preparing guessing game , enter this in your web browser - Localhost:8080")
     http.ListenAndServe(":8080", nil)	
 	
