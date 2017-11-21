@@ -51,7 +51,7 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	
-	if matched, _:= regexp.MatchString(`(?i).*am.*`, userGuess);matched{
+	if matched, _:= regexp.MatchString(`(?i).*\bam\b.*`, userGuess);matched{
 		answers3 := []string{`I'm not sure what that feels like, as I am a bot.`,`I have always wondered what human emotions are like.`,`I am unfamiliar with that feeling`}
 		randindex3 := rand.Intn(len(answers3))
 		fmt.Fprintf(w,answers3[randindex3])
@@ -76,6 +76,22 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 		fmt.Fprintf(w,answers5[randindex5])
 		return
 	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*time.*`, userGuess);matched{
+		answers5 := []string{`The time is ` + t.Format("3:04PM")}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*day.*`, userGuess);matched{
+		answers5 := []string{`Today is ` + t.Weekday().String()}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return
+	}
+	
+	
 
 	
 	answers := []string{`Why do %s?`, `How long have %s?`,`Why %s?`}
