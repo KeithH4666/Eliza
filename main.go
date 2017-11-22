@@ -52,7 +52,7 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 	}
 	
 	if matched, _:= regexp.MatchString(`(?i).*\bam\b.*`, userGuess);matched{
-		answers3 := []string{`I'm not sure what that feels like, as I am a bot.`,`I have always wondered what human emotions are like.`,`I am unfamiliar with that feeling`}
+		answers3 := []string{`I'm not sure what that feels like, as I am a bot.`,`I have aalways wondered what human emotions are like.`,`I am unfamiliar with that feeling`}
 		randindex3 := rand.Intn(len(answers3))
 		fmt.Fprintf(w,answers3[randindex3])
 		return
@@ -90,6 +90,22 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 		fmt.Fprintf(w,answers5[randindex5])
 		return
 	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*[s|S]orry.*`, userGuess);matched{
+		answers5 := []string{`No need to apoligise , please continue`}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*[b|B]ecause.*`, userGuess);matched{
+		answers5 := []string{`I'm sorry user sometimes I can't grasp human conversation "Lingo"! Lovely day though?`}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return
+	}
+	
+	
 	
 	
 

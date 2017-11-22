@@ -12,15 +12,65 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
   </head>
   <style>
+  body{
+    padding-top: 90px;
+    padding-bottom: 210px;
+  }
+	
 	.heading{
 		text-align: center;
-	}	
+	}
+	.button{
+		text-align: center;
+	}
+	#container{
+	
+		position: absolute;
+		bottom: 0;
+	
+	}
+	
+	ul { 
+      list-style: none; 
+    }
+
+  ul p{
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    
+  }
+
+  ul p:nth-child(2n+2){
+    background-color: rgba(194, 66, 66,0.2);
+    text-align: right;
+    margin-left: 55%;
+    margin-right: 5%;
+    margin-top: 10px;
+  }
+
+  ul p:nth-child(2n+1){
+    background-color: rgba(66, 186, 194,0.2);
+    text-align: left;
+    margin-right: 55%;
+    margin-left: 5%;
+    margin-top: 10px;
+  }
+
   </style>
   <body background="medium.jpg">
-    <div class="container">
-      <h1 class="heading">Eliza</h1>
-    </div>
+	<nav class="navbar fixed-top navbar-light" style="background-color: rgba(153, 234, 234,0.2);">
+      <a class="navbar-brand" href="#">
+      Eliza
+      </a>
+	</nav>
+	<body>
+      <ul id="eliza">
 
+      </ul>
+    </body>
+	<nav class="navbar fixed-bottom navbar-light" style="background-color: rgba(153, 234, 234,0.2);" id="navbarBottom">
     <div class="container">
       <!-- Adapted from: https://v4-alpha.getbootstrap.com/components/forms/ -->
       <form id="user-input-form">
@@ -30,14 +80,14 @@
           <small id="user-input-help" class="form-text text-muted">Type something here and press submit.</small>
         </div>
         
+		<div class="button">
         <button type="submit" class="btn btn-primary">Submit</button>
-
-        <div class="form-group">
-          <label for="output-area">Eliza Response</label>
-          <textarea class="form-control" id="output-area" rows="3" disabled></textarea>
-        </div>
+		</div>
+		
       </form>
     </div>
+	</nav>
+	
 	
 	<ul id="chatList">
 	</ul>
@@ -50,7 +100,7 @@
 	function ajax_delay(str){
 	setTimeout("str",2000);
 	}
-	var list = document.getElementById('chatList');
+	var list = document.getElementById('eliza');
       $("#user-input-form").submit(
         function(event)
 		{
@@ -68,10 +118,11 @@
 			  })
         });
 		
-		function ElizaR(){
-		
-		}
-		
+		setTimeout(function () {
+              $('html, body').animate({
+                scrollTop: $(window).scrollTop() + 250
+              });
+            },500);
     </script>
 	
   </body>
