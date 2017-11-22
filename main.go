@@ -58,7 +58,7 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 		return
 	}
 	
-	if matched, _:= regexp.MatchString(`(?i).*\bHello|Hey|Hi\b`, userGuess);matched{
+	if matched, _:= regexp.MatchString(`(?i).*\bHello\b|\bHey\b|\bHi\b`, userGuess);matched{
 		answers4 := []string{`Greetings user, nice to chat!`,`Hello human! My name is Eliza!`,`Hello , my names Eliza! Lets chat!`}
 		randindex4 := rand.Intn(len(answers4))
 		fmt.Fprintf(w,answers4[randindex4])
