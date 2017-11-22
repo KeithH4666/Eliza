@@ -43,6 +43,8 @@
 	
 	<script>
 	var list = document.getElementById('chatList');
+	var dt = new Date();
+	var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
       $("#user-input-form").submit(
         function(event)
 		{
@@ -54,8 +56,8 @@
 
 			var entry = document.createElement('p');
 			var user = document.createElement('p');
-			user.appendChild(document.createTextNode("User: " + $('#user-input').val()));
-			entry.appendChild(document.createTextNode("Eliza : " + data));
+			user.appendChild(document.createTextNode("User: " + $('#user-input').val() + time));
+			entry.appendChild(document.createTextNode("Eliza : " + data + time));
 			list.appendChild(user)
 			list.appendChild(entry);
 			})
