@@ -41,8 +41,20 @@
     padding-top: 10px;
     
   }
-
-  ul p:nth-child(2n+2){
+  
+   /*Time*/
+   ul p:nth-child(6n){
+	border-radius: 25px;
+    <!--background-color: rgba(194, 66, 66,0.2)-->
+    text-align: right;
+    margin-left: 55%;
+    margin-right: 5%;
+    margin-top: 10px;
+	font-weight: bold;
+  }
+  
+  /*Eliza Text*/
+  ul p:nth-child(6n-1){
 	border-radius: 25px;
     background-color: rgba(194, 66, 66,0.2);
     text-align: right;
@@ -50,8 +62,33 @@
     margin-right: 5%;
     margin-top: 10px;
   }
+  
+  /*ElizaName*/
+  ul p:nth-child(6n-2){
+	border-radius: 25px;
+    <!--background-color: rgba(194, 66, 66,0.2);-->
+    text-align: right;
+    margin-left: 55%;
+    margin-right: 5%;
+    
+	font-weight: bold;
+  }
+  
+  /*Time*/
+   ul p:nth-child(6n-3){
+	border-radius: 25px;
+    <!--background-color: rgba(66, 186, 194,0.2);-->
+    text-align: left;
+    margin-right: 55%;
+    margin-left: 5%;
+    margin-top: 10px;
+	font-weight: bold;
+  }
+  
+  
 
-  ul p:nth-child(2n+1){
+  /*userText*/
+  ul p:nth-child(6n-4){
 	border-radius: 25px;
     background-color: rgba(66, 186, 194,0.2);
     text-align: left;
@@ -59,8 +96,16 @@
     margin-left: 5%;
     margin-top: 10px;
   }
-
-
+  
+  /*UserName*/
+  ul p:nth-child(6n-5){
+	border-radius: 25px;
+    <!--background-color: rgba(66, 186, 194,0.2);-->
+    text-align: left;
+    margin-right: 55%;
+    margin-left: 5%;
+	font-weight: bold;
+  }
   
   .navbar-brand{
 	text-align:center;
@@ -69,6 +114,7 @@
   }
 
   </style>
+
   <body background="medium.jpg">
 	<nav class="navbar fixed-top navbar-light" style="background-color: rgba(153, 234, 234,0.2);">
       <a class="navbar-brand" href="#">
@@ -123,16 +169,24 @@
 			  
 			  var entry = document.createElement('p');
 			  var user = document.createElement('p');
+			  var userN = document.createElement('p');
+			  var eName = document.createElement('p');
+			  var userTime = document.createElement('p');
+			  var ATime = document.createElement('p');
 			  var dt = new Date();
 			  var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
-			
-			  user.appendChild(document.createTextNode("User: " + $('#user-input').val()+ time));
-			 
-			  entry.appendChild(document.createTextNode("Eliza : " + data + time));
-			 
+			  userN.appendChild(document.createTextNode("User:"));
+			  user.appendChild(document.createTextNode($('#user-input').val()));
+			  userTime.appendChild(document.createTextNode(time));
+			  eName.appendChild(document.createTextNode("Eliza:"));
+			  entry.appendChild(document.createTextNode(data));
+			  ATime.appendChild(document.createTextNode(time));
+			  list.appendChild(userN);
 			  list.appendChild(user);
-			  
+			  list.appendChild(userTime);
+			  list.appendChild(eName);
 			  list.appendChild(entry);
+			  list.appendChild(ATime);
 			  setTimeout(function () {
               $('html, body').animate({
                 scrollTop: $(window).scrollTop() + 250
