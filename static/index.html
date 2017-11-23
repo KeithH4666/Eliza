@@ -58,7 +58,7 @@
   /*Eliza Text*/
   ul p:nth-child(6n-1){
 	border-radius: 25px;
-    background-color: rgba(194, 66, 66,0.2);
+    background-color: rgba(194, 66, 66,0.4);
     text-align: right; 
     margin-left: 55%;
     margin-right: 5%;
@@ -120,7 +120,7 @@
   </style>
 
   <body>
-	<nav class="navbar fixed-top navbar-light" style="background-color: rgba(0, 0, 0, 0.2);">
+	<nav class="navbar fixed-top navbar-light" style="background-color: rgba(0, 0, 0, 0.4);">
       <a class="navbar-brand">
       Eliza
       </a>
@@ -129,7 +129,7 @@
       <ul id="eliza">
       </ul>
     </body>
-	<nav class="navbar fixed-bottom navbar-light" style="background-color: rgba(0, 0, 0, 0.2);" id="navbarBottom">
+	<nav class="navbar fixed-bottom navbar-light" style="background-color: rgba(0, 0, 0, 0.4);" id="navbarBottom">
     <div class="container">
       <!-- Adapted from: https://v4-alpha.getbootstrap.com/components/forms/ -->
       <form id="user-input-form">
@@ -158,18 +158,16 @@
 	
 	<script>
 	
+	//Element to hold user conversation//
 	var list = document.getElementById('eliza');
-	var dt = new Date();
-	var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 	
-	
+	//Function to play sound when user clicks//
 	function playSound() {
           var sound = document.getElementById("audio");
           sound.play();
       }
 
-	 
-	
+	 //On sumbit g
       $("#user-input-form").submit(
         function(event)
 		{
@@ -178,6 +176,8 @@
           $.get('/Eliza', {value: $('#user-input').val() } )
             .done(function (data){
               $('#output-area').val(data);
+			  
+			  //Adds p elements when called//
 			  var value = $('#user-input').val();
 			  var entry = document.createElement('p');
 			  var user = document.createElement('p');
@@ -185,8 +185,12 @@
 			  var eName = document.createElement('p');
 			  var userTime = document.createElement('p');
 			  var ATime = document.createElement('p');
+			  
+			  //For time//
 			  var dt = new Date();
 			  var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+			  
+			  //Displays user convo//
 			  userN.appendChild(document.createTextNode("User:"));
 			  user.appendChild(document.createTextNode(value));
 			  userTime.appendChild(document.createTextNode(time));
@@ -199,8 +203,11 @@
 			  list.appendChild(eName);
 			  list.appendChild(entry);
 			  list.appendChild(ATime);
+			  
+			  //Clears text box
 			  $('#user-input').val('');
 			  
+			  //Timout function for page to move up when conversation is added//
 			  setTimeout(function () {
               $('html, body').animate({
                 scrollTop: $(window).scrollTop() + 350

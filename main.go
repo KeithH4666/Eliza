@@ -1,5 +1,5 @@
 package main
-//import geo "github.com/martinlindhe/google-geolocate"
+
 
 import (
 	"net/http"
@@ -9,18 +9,16 @@ import (
 	"regexp"
 	"time"
 	"math/rand"
-	
-	
-	//"time"
 )
 
 
-
+//Struct for responses (Only works for I love/I like) //
 type Response struct {
 	pattern         *regexp.Regexp
 	possibleAnswers []string
 }
 
+//Function to arrange words (Only works for I love/I like) //
 func substituteWords(answer string, reflectionMap map[string]string) string {
 	allWords := strings.Split(answer, " ") // get slices of the words {"words", "in", "sentence"}
 	for index, word := range allWords {
@@ -31,22 +29,18 @@ func substituteWords(answer string, reflectionMap map[string]string) string {
 	return strings.Join(allWords, " ") // join back into string "words in sentence"
 }
 
-func Reverse(s string) (result string) {
-  for _,v := range s {
-    result = string(v) + result
-  }
-  return 
-}
-
-
 func Eliza(w http.ResponseWriter, r *http.Request){
+	//time for random//
 	t := time.Now()
 	
-	
+	//Seeds time for random//
 	rand.Seed(time.Now().UnixNano())
-	userGuess := r.URL.Query().Get("value")
 	
-	re := regexp.MustCompile(`(?i)[I|i] [love|like](.*)`)
+	//gets input from html + sets to variable//
+	userGuess := r.URL.Query().Get("value")
+
+	
+	//////////////////////////////////////////REGULAR EXPRESSIONS/////////////////////////////////////////////////
 	if matched, _:= regexp.MatchString(`(?i).*\bHow|Why\b.*`, userGuess);matched{
 		answers1 := []string{`I like to keep myself and my answers to myself`,`Why would you wonder such a thing?`,`I'm a chat bot not wikipedia`}
 		randindex1 := rand.Intn(len(answers1))
@@ -156,10 +150,11 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 		fmt.Fprintf(w,answers5[randindex5])
 		return 
 	}
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
-	
-
+	////////REGULAR EXPRESSIONS WITH SWAP SENTANCE MANIPULATION////////
+	re := regexp.MustCompile(`(?i)[I|i] [love|like](.*)`)
 	
 	answers := []string{`Why do %s?`}
 	
@@ -174,7 +169,7 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 		"i": "you",
 		"was": "were",
 		"are": "am",
-		"like":"liked",
+		"like":"like",
 		"love":"love",
 		"time": t.Format("3:04PM"),
 		// and plenty more
@@ -189,8 +184,8 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 		finalResponse := fmt.Sprintf(chosenResponse, topic)   // sub the "topic" into the response - since the response has a %s for this purpose
 		fmt.Fprintf(w,finalResponse)                            // we actually want to display this in the html page or template or something.
 
-		// The output will be "How long have you liked me?" or "Why do you like me?"
 	} else {
+		//General responses if no text is matched//
 		responses :=[]string{
 		"I’m not sure what you’re trying to say. Could you explain it to me?",
 		"How does that make you feel?",
@@ -214,7 +209,7 @@ func main() {
 	http.Handle("/", fs)
 	http.HandleFunc("/Eliza", Eliza)
 	
-    log.Println("Preparing guessing game , enter this in your web browser - Localhost:8080")
+    log.Println("Eliza is awake now , enter this in your web browser to communicate - Localhost:8080")
     http.ListenAndServe(":8080", nil)	
 	
 }
