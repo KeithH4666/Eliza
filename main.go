@@ -1,4 +1,5 @@
 package main
+//import geo "github.com/martinlindhe/google-geolocate"
 
 import (
 	"net/http"
@@ -9,9 +10,11 @@ import (
 	"time"
 	"math/rand"
 	
+	
 	//"time"
-
 )
+
+
 
 type Response struct {
 	pattern         *regexp.Regexp
@@ -39,7 +42,7 @@ func Reverse(s string) (result string) {
 func Eliza(w http.ResponseWriter, r *http.Request){
 	t := time.Now()
 	
-
+	
 	rand.Seed(time.Now().UnixNano())
 	userGuess := r.URL.Query().Get("value")
 	
@@ -52,17 +55,21 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 	}
 	
 	if matched, _:= regexp.MatchString(`(?i).*\bam\b.*`, userGuess);matched{
-		answers3 := []string{`I'm not sure what that feels like, as I am a bot.`,`I have aalways wondered what human emotions are like.`,`I am unfamiliar with that feeling`}
+	
+		answers3 := []string{`I'm not sure what that feels like, as I am a bot.`,`I have1always wondered what human emotions are like.`,`I am unfamiliar with that feeling`}
 		randindex3 := rand.Intn(len(answers3))
 		fmt.Fprintf(w,answers3[randindex3])
 		return
 	}
 	
 	if matched, _:= regexp.MatchString(`(?i).*\bHello\b|\bHey\b|\bHi\b`, userGuess);matched{
+		
 		answers4 := []string{`Greetings user, nice to chat!`,`Hello human! My name is Eliza!`,`Hello , my names Eliza! Lets chat!`}
 		randindex4 := rand.Intn(len(answers4))
 		fmt.Fprintf(w,answers4[randindex4])
 		return
+		
+		
 	}
 	
 	if matched, _:= regexp.MatchString(`(?i).*\bfather\b.*`, userGuess);matched{
@@ -85,7 +92,7 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 	}
 	
 	if matched, _:= regexp.MatchString(`(?i).*day.*`, userGuess);matched{
-		answers5 := []string{`Today is ` + t.Weekday().String()}
+		answers5 := []string{`Today is ` + t.Weekday().String() + ` whats your favourite day?`}
 		randindex5 := rand.Intn(len(answers5))
 		fmt.Fprintf(w,answers5[randindex5])
 		return
@@ -99,18 +106,62 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 	}
 	
 	if matched, _:= regexp.MatchString(`(?i).*[b|B]ecause.*`, userGuess);matched{
-		answers5 := []string{`I'm sorry user sometimes I can't grasp human conversation "Lingo"! Lovely day though?`}
+		answers5 := []string{`Ahh I see! Lovely day?`}
 		randindex5 := rand.Intn(len(answers5))
 		fmt.Fprintf(w,answers5[randindex5])
 		return
 	}
 	
+	if matched, _:= regexp.MatchString(`^[0-9]?$`, userGuess);matched{
+		answers5 := []string{`Try saying hello to me! Typing !Info gives some things i'm capable of telling you.`}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*!info.*`, userGuess);matched{
+		answers5 := []string{`I can tell you the time and the day if you ask me!`}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*Who.*`, userGuess);matched{
+		answers5 := []string{`I can't tell you who anyone is becaause I have no friends.`,`I'm not sure who 'who' is. Try asking me what day it is!`}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*Where.*`, userGuess);matched{
+		
+		answers5:= []string{`You should know where that is, I havnt been to many places.`}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return 
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*My.*`, userGuess);matched{
+		
+		answers5:= []string{`I love learning about the user, Thanks you.`,`Wow thats very interesting, Tell me more.`}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return 
+	}
+	
+	if matched, _:= regexp.MatchString(`(?i).*you are.*`, userGuess);matched{
+		
+		answers5:= []string{`Wow, You know more about me than I do.`,`I would love to learn more about myself, try asking me what time it is.`}
+		randindex5 := rand.Intn(len(answers5))
+		fmt.Fprintf(w,answers5[randindex5])
+		return 
+	}
 	
 	
 	
 
 	
-	answers := []string{`Why do %s?`, `How long have %s?`,`Why %s?`}
+	answers := []string{`Why do %s?`}
 	
 	
 	likeResponse := Response{re, answers} // Responses could be read from files.
@@ -144,6 +195,8 @@ func Eliza(w http.ResponseWriter, r *http.Request){
 		"I’m not sure what you’re trying to say. Could you explain it to me?",
 		"How does that make you feel?",
 		"Why do you say that?",
+		"Hmmmm sounds interesting..",
+		"I know what day/time it is!",
 		}
 		randindex := rand.Intn(len(responses))
 		fmt.Fprintf(w,responses[randindex]) // there was no regex match so just say some default answer.

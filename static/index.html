@@ -14,7 +14,9 @@
   <style>
   body{
     padding-top: 90px;
-    padding-bottom: 210px;
+    padding-bottom: 350px;
+	background-image: url("medium.jpg");
+    background-attachment: fixed;
   }
 	
 	.heading{
@@ -61,6 +63,7 @@
     margin-left: 55%;
     margin-right: 5%;
     margin-top: 10px;
+	font-weight: bold;
   }
   
   /*ElizaName*/
@@ -95,6 +98,7 @@
     margin-right: 55%;
     margin-left: 5%;
     margin-top: 10px;
+	font-weight: bold;
   }
   
   /*UserName*/
@@ -115,16 +119,14 @@
 
   </style>
 
-  <body background="medium.jpg">
+  <body>
 	<nav class="navbar fixed-top navbar-light" style="background-color: rgba(0, 0, 0, 0.2);">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand">
       Eliza
       </a>
 	</nav>
 	<body>
-	  <ul id="names">
       <ul id="eliza">
-
       </ul>
     </body>
 	<nav class="navbar fixed-bottom navbar-light" style="background-color: rgba(0, 0, 0, 0.2);" id="navbarBottom">
@@ -133,7 +135,7 @@
       <form id="user-input-form">
         <div class="form-group">
           <label for="user-input">User input</label>
-          <input type="text" class="form-control" id="user-input" aria-describedby="user-input-help" placeholder="Enter input">
+          <input type="text" type= "POST" class="form-control" id="user-input" aria-describedby="user-input-help" placeholder="Enter input">
           <small id="user-input-help" class="form-text text-muted">Type something here and press submit.</small>
         </div>
         
@@ -160,22 +162,23 @@
 	var dt = new Date();
 	var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 	
+	
 	function playSound() {
-		
           var sound = document.getElementById("audio");
           sound.play();
-		  
       }
+
 	 
 	
       $("#user-input-form").submit(
         function(event)
 		{
+		  	
           event.preventDefault();
           $.get('/Eliza', {value: $('#user-input').val() } )
             .done(function (data){
               $('#output-area').val(data);
-			  
+			  var value = $('#user-input').val();
 			  var entry = document.createElement('p');
 			  var user = document.createElement('p');
 			  var userN = document.createElement('p');
@@ -185,7 +188,7 @@
 			  var dt = new Date();
 			  var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
 			  userN.appendChild(document.createTextNode("User:"));
-			  user.appendChild(document.createTextNode($('#user-input').val()));
+			  user.appendChild(document.createTextNode(value));
 			  userTime.appendChild(document.createTextNode(time));
 			  eName.appendChild(document.createTextNode("Eliza:"));
 			  entry.appendChild(document.createTextNode(data));
@@ -196,13 +199,19 @@
 			  list.appendChild(eName);
 			  list.appendChild(entry);
 			  list.appendChild(ATime);
+			  $('#user-input').val('');
+			  
 			  setTimeout(function () {
               $('html, body').animate({
-                scrollTop: $(window).scrollTop() + 250
+                scrollTop: $(window).scrollTop() + 350
               });
             },1000);
 			  })
+			  
+			  
+			  
         });
+		
 		
 		
     </script>
