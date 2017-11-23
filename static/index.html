@@ -14,8 +14,8 @@
   <style>
   body{
     padding-top: 90px;
-    padding-bottom: 350px;
-	background-image: url("medium.jpg");
+    padding-bottom: 150px;
+	background-image: url("main.gif");
     background-attachment: fixed;
   }
 	
@@ -58,7 +58,7 @@
   /*Eliza Text*/
   ul p:nth-child(6n-1){
 	border-radius: 25px;
-    background-color: rgba(194, 66, 66,0.4);
+    background-color: rgba(194, 66, 66,0.7);
     text-align: right; 
     margin-left: 55%;
     margin-right: 5%;
@@ -93,7 +93,7 @@
   /*userText*/
   ul p:nth-child(6n-4){
 	border-radius: 25px;
-    background-color: rgba(234, 208, 83, 0.4);
+    background-color: rgba(234, 208, 83, 0.7);
     text-align: left;
     margin-right: 55%;
     margin-left: 5%;
@@ -116,6 +116,10 @@
 	font-size: 200%;
 	font-weight: bold;
   }
+  
+  .ttt{
+	text-align:center;
+  }
 
   </style>
 
@@ -134,7 +138,7 @@
       <!-- Adapted from: https://v4-alpha.getbootstrap.com/components/forms/ -->
       <form id="user-input-form">
         <div class="form-group">
-          <label for="user-input">User input</label>
+          <label id= 'ttt' for="user-input"></label>
           <input type="text" type= "POST" class="form-control" id="user-input" aria-describedby="user-input-help" placeholder="Enter input">
           <small id="user-input-help" class="form-text text-muted">Type something here and press submit.</small>
         </div>
@@ -160,6 +164,7 @@
 	
 	//Element to hold user conversation//
 	var list = document.getElementById('eliza');
+	var respP = document.getElementById('ttt');
 	
 	//Function to play sound when user clicks//
 	function playSound() {
@@ -185,10 +190,14 @@
 			  var eName = document.createElement('p');
 			  var userTime = document.createElement('p');
 			  var ATime = document.createElement('p');
+			  var wait = document.createElement('label');
+			  
 			  
 			  //For time//
 			  var dt = new Date();
 			  var time = dt.getHours() + ":" + dt.getMinutes() + ":" + dt.getSeconds();
+			  
+	
 			  
 			  //Displays user convo//
 			  userN.appendChild(document.createTextNode("User:"));
@@ -197,22 +206,36 @@
 			  eName.appendChild(document.createTextNode("Eliza:"));
 			  entry.appendChild(document.createTextNode(data));
 			  ATime.appendChild(document.createTextNode(time));
+			  wait.appendChild(document.createTextNode("Responding.."));
 			  list.appendChild(userN);
 			  list.appendChild(user);
 			  list.appendChild(userTime);
+			  
+			  
+			  respP.appendChild(wait);
+			  
+			  setTimeout(function(){
+			   //wait.appendChild(document.createTextNode(" "));
+			   respP.removeChild(wait);
+			  },1600);
+			  
+			
+			  setTimeout(function(){
 			  list.appendChild(eName);
 			  list.appendChild(entry);
 			  list.appendChild(ATime);
+			  },1600);
+			  
 			  
 			  //Clears text box
 			  $('#user-input').val('');
 			  
 			  //Timout function for page to move up when conversation is added//
-			  setTimeout(function () {
-              $('html, body').animate({
-                scrollTop: $(window).scrollTop() + 350
-              });
-            },1000);
+			  setTimeout(function() {
+				$("html, body").animate({ scrollTop: $(document).height() }, 1600);
+				return false;
+				});
+				
 			  })
 			  
 			  
