@@ -117,8 +117,9 @@
 	font-weight: bold;
   }
   
-  .ttt{
+  .labelresp{
 	text-align:center;
+	text-size: 50%;
   }
 
   </style>
@@ -138,7 +139,9 @@
       <!-- Adapted from: https://v4-alpha.getbootstrap.com/components/forms/ -->
       <form id="user-input-form">
         <div class="form-group">
+		  <div class = "labelresp">
           <label id= 'ttt' for="user-input"></label>
+		  </div>
           <input type="text" type= "POST" class="form-control" id="user-input" aria-describedby="user-input-help" placeholder="Enter input">
           <small id="user-input-help" class="form-text text-muted">Type something here and press submit.</small>
         </div>
@@ -235,7 +238,6 @@
 				$("html, body").animate({ scrollTop: $(document).height() }, 1600);
 				return false;
 				});
-				
 			  })
 			  
 			  
